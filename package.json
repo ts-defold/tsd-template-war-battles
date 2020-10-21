@@ -1,0 +1,33 @@
+{
+  "name": "tsd-template",
+  "version": "1.1.2",
+  "description": "A minimalist Defold TypeScript template",
+  "repository": "github:thejustinwalsh/defold-typescript",
+  "keywords": [
+    "typescript",
+    "lua",
+    "defold"
+  ],
+  "author": "Justin Walsh (https://thejustinwalsh.com/)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "scripts": {
+    "postinstall": "patch-package",
+    "build": "tstl",
+    "lint": "eslint src",
+    "dev": "tstl --watch"
+  },
+  "devDependencies": {
+    "@ts-defold/tstl-export-as-global": "^0.0.2",
+    "@ts-defold/types": "^1.1.10",
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/parser": "^4.4.0",
+    "eslint": "^7.10.0",
+    "patch-package": "^6.2.2",
+    "typescript": "^3.9.2",
+    "typescript-to-lua": "^0.35.0"
+  },
+  "dependencies": {}
+}

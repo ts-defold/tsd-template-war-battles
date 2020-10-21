@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "target": "es2019",
+        "lib": ["es2019"],
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "types": ["@ts-defold/types"],
+
+        "rootDir": "src",
+        "outDir": "app",
+        "strict": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+    },
+    "exclude": [
+        "./node_modules/*",
+        "./plugins/*"
+    ],
+    "tstl": {
+        "luaTarget": "5.1",
+        "luaLibImport": "inline",
+        "trimExtensions": true,
+        "luaPlugins": [
+            {
+                "name": "@ts-defold/tstl-export-as-global",
+                "match": ".*script.ts$",
+                "globals": { 
+                    "functions": [ "init", "on_input", "on_message", "on_reload", "update", "final"]
+                }
+            },
+        ]
+    }
+}

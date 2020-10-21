@@ -1,0 +1,36 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Dependency directories
+node_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Generated
+app/modules/
+app/scripts/
+!src/**
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Defold
+app/.internal
+app/build
+.externalToolBuilders
+.lock-wscript
+*.pyc
+app/builtins
