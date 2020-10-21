@@ -5,9 +5,11 @@ This tutorial goes through the steps needed to create a small playable game embr
 
 You start with a complete project except the exercises below. You can verify that the project is working by [building and running it](defold://build) (or selecting <kbd>Project ▸ Build</kbd> from the menu). This will launch the game and you should see a complete working game that you are going to create.
 
-Delete the `src/scripts` folder if you would like to re-implement this tutorials code. If you would like to re-implement creating the assets, delete the `app` folder and clone the original [war-battles tutorial](https://github.com/defold/tutorial-war-battles) as app.
+Delete the `src/scripts` folder if you would like to re-implement this tutorials code. If you would like to re-implement creating the assets, delete the `app` folder and degit (or clone) the original [war-battles tutorial](https://github.com/defold/tutorial-war-battles) as app.
 
 ```sh
+npx degit defold/tutorial-war-battles.git app
+#or
 git clone https://github.com/defold/tutorial-war-battles.git app
 ```
 
