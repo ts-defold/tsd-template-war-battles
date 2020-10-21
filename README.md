@@ -1,8 +1,17 @@
-# War battles tutorial
+# War Battles Tutorial
+<a href="https://discord.gg/eukcq5m"><img alt="Chat with us!" src="https://img.shields.io/discord/766898804896038942.svg?colorB=7581dc&logo=discord&logoColor=white"></a>
 
-This tutorial goes through the steps needed to create a small playable game embryo in Defold. You do not need to have any prior experience with Defold, but if you have done some programming in Lua, Javascript, Python or similar, that will help.
+This tutorial goes through the steps needed to create a small playable game embryo in Defold. You do not need to have any prior experience with Defold, but if you have done some programming in TypeScript, Javascript, Lua, Python or similar, that will help.
 
-You start with an empty project but we have added the required assets for you. You can verify that the project is empty by [building and running it](defold://build) (or selecting <kbd>Project ▸ Build</kbd> from the menu). This will launch the game and you should see nothing but a black window.
+You start with a complete project except the exercises below. You can verify that the project is working by [building and running it](defold://build) (or selecting <kbd>Project ▸ Build</kbd> from the menu). This will launch the game and you should see a complete working game that you are going to create.
+
+Delete the `src/scripts` folder if you would like to re-implement this tutorials code. If you would like to re-implement creating the assets, delete the `app` folder and clone the original [war-battles tutorial](https://github.com/defold/tutorial-war-battles) as app.
+
+```sh
+git clone https://github.com/defold/tutorial-war-battles.git app
+```
+
+Before continuing be sure to run `npm install`, open the folder in `code .`, and start your dev server with `npm run dev`.
 
 ## Draw the game map
 
@@ -616,8 +625,12 @@ We hope you enjoyed this tutorial and that it was helpful. To get to know Defold
 
 Check out the [documentation pages](https://defold.com/learn) for examples, tutorials, manuals and API docs.
 
-If you run into trouble, help is available in [our forum](https://forum.defold.com).
+If you run into trouble, help is available in [the Defold forum](https://forum.defold.com) or [the @ts-defold Discord channel](https://discord.gg/eukcq5m)
 
 Happy Defolding!
 
 ---
+
+<p align="center" class="h4">
+  TypeScript :heart: Defold
+</p>
