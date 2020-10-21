@@ -1,22 +1,23 @@
+[project]
+title = war-battles
+version = 0.1
+
 [bootstrap]
 main_collection = /main/main.collectionc
+
+[input]
+game_binding = /input/game.input_bindingc
+
+[display]
+width = 720
+height = 720
+
+[physics]
+scale = 0.02
 
 [script]
 shared_state = 1
 
-[display]
-width = 800
-height = 800
-update_frequency = 60
-
-[android]
-input_method = HiddenInputField
-
-[project]
-title = tsd-template
-
-[render]
-clear_color_red = 0.19
-clear_color_green = 0.47
-clear_color_blue = 0.78
+[tilemap]
+max_tile_count = 100000
 
