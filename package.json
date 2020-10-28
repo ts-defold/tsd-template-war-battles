@@ -1,6 +1,6 @@
 {
   "name": "tsd-template-war-battles",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A minimalist Defold TypeScript template",
   "repository": "github:thejustinwalsh/defold-typescript",
   "keywords": [
