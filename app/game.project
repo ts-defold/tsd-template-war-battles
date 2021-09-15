@@ -1,6 +1,6 @@
 [project]
-title = war-battles
-version = 0.1
+title = tsd-template-war-battles
+dependencies#0 = https://github.com/ts-defold/defold-lldebugger/archive/extension.zip
 
 [bootstrap]
 main_collection = /main/main.collectionc
