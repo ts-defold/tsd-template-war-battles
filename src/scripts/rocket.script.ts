@@ -22,10 +22,10 @@ export function update(this: props, dt:number): void {
 }
 
 export function on_message(this: props, messageId: hash, message: {other_id: hash}, _sender: url): void {
-    if (messageId == hash("animation_done")) {
+    if (messageId === hash("animation_done")) {
         go.delete();
     }
-    else if (messageId == hash("collision_response")) {
+    else if (messageId === hash("collision_response")) {
         explode(this);
         go.delete(message.other_id);
         msg.post("/gui#ui", "add_score", {score: 100});
