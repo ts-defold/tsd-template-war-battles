@@ -46,19 +46,19 @@ export function update(this: props, dt: number): void {
 }
 
 export function on_input(this: props, actionId: hash, action: action): void {
-    if (actionId == hash("up")) {
+    if (actionId === hash("up")) {
         this.input.y = 1;
     }
-    else if (actionId == hash("down")) {
+    else if (actionId === hash("down")) {
         this.input.y = -1;
     }
-    else if (actionId == hash("left")) {
+    else if (actionId === hash("left")) {
         this.input.x = -1;
     }
-    else if (actionId == hash("right")) {
+    else if (actionId === hash("right")) {
         this.input.x = 1;
     }
-    else if (actionId == hash("fire") && action.pressed) {
+    else if (actionId === hash("fire") && action.pressed) {
         this.firing = true;
     }
 
