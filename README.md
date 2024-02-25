@@ -57,7 +57,7 @@ Defold stores everything you build in *collections*. A collection is a file used
 
     ![add game object](app/doc/add_game_object.jpg)
 
-3. Change the *Id* property of the game object to "map". The id does not really matter for this game object but it is a good habit to set identifiers that are descriptive---it makes it easier to find your way around when you have many game objects.
+3. Change the *Id* property of the game object to "map". The id does not really matter for this game object but it is a good habit to set identifiers that are descriptive--it makes it easier to find your way around when you have many game objects.
 
 4. <kbd>Right click</kbd> the new game object and select <kbd>Add Component File</kbd>.
 
@@ -89,7 +89,7 @@ NOTE: If you get an "Out of tiles to render" error when running the game it mean
 
     ![play animation](app/doc/play_animation.jpg)
 
-Now you have an atlas with a single flipbook animation for the player. This is enough for initial testing---you can add more animations later. Now, let's create the player game object.
+Now you have an atlas with a single flipbook animation for the player. This is enough for initial testing--you can add more animations later. Now, let's create the player game object.
 
 ## Create the player game object
 
@@ -129,17 +129,15 @@ There are no input mapped by default so you need to add input actions for your p
 
 Unlike the sprite component, which you added directly into the "player" game object, a script component requires that you create a separate file. This script file is then used a template for the script component:
 
-1. <kbd>Right click</kbd> the folder "main" in the *Assets* view and select <kbd>New ▸ Script</kbd>. Name the new script file "player" (full name "player.script"). The script file, pre-filled with template functions, opens up in the editor.
+1. Open the "src/scripts" folder, and create a "player.script.ts" file. This TypeScript file will be output by the transpiler as a Lua script with the filename "player.script".
 
-    ![player script](app/doc/player_script.jpg)
-
-2. Open "main.collection", <kbd>Right click</kbd> the game object "player" and select <kbd>Add Component File</kbd>. Pick the new file "/main/player.script" as the file to use for the component.
+2. Open "main.collection", <kbd>Right click</kbd> the game object "player" and select <kbd>Add Component File</kbd>. Pick the new file "/scripts/player.script" as the file to use for the component.
 
 You now have a script that runs in the "player" game object. It does not do anything yet though. Start by creating the logic for player movement.
 
 ## Program the player movement
 
-The Lua code needed to create character movement in 8 directions is not long, but may require some time to understand completely. Replace the code for each of the functions in "player.script" with the code below, run the game, then take your time to carefully read through the code notes below.
+The code needed to create character movement in 8 directions is not long, but may require some time to understand completely. Replace the code for each of the functions in "player.script.ts" with the code below, run the game, then take your time to carefully read through the code notes below.
 
 
 ```ts
@@ -180,16 +178,16 @@ export function update(this: props, dt: number): void {                         
 }
 
 export function on_input(this: props, actionId: hash, action: action): void {    // [14]
-    if (actionId == hash("up")) {
+    if (actionId === hash("up")) {
         this.input.y = 1                                                         // [15]
     }
-    else if (actionId == hash("down")) {
+    else if (actionId === hash("down")) {
         this.input.y = -1;
     }
-    else if (actionId == hash("left")) {
+    else if (actionId === hash("left")) {
         this.input.x = -1;
     }
-    else if (actionId == hash("right")) {
+    else if (actionId === hash("right")) {
         this.input.x = 1;
     }
         
@@ -207,7 +205,7 @@ export function on_input(this: props, actionId: hash, action: action): void {   
 6. `speed` is the movement speed expressed in pixels per second.
 7. The `final()` function is called when the script component is deleted from the game. This happens either when the container game object ("player") is deleted or when the game shuts down.
 8. The script explicitly releases input focus, telling the engine that it wants no more input. Input focus is automatically released when the game object is deleted so this line is not necessary but is included here for clarity.
-9. The `update()` function is called once each frame. The game is running at 60 frames per second so the function is called at an interval of 1/60 seconds. The argument variable `dt` contains the current frame interval---the number of seconds elapsed since the last call to the function.
+9. The `update()` function is called once each frame. The game is running at 60 frames per second so the function is called at an interval of 1/60 seconds. The argument variable `dt` contains the current frame interval--the number of seconds elapsed since the last call to the function.
 10. If the `moving` flag is true, get the current game object position. The function `go.get_position()` takes an optional argument which is the id of the game object to get the position of. If no argument is given, the current game object's position is returned.
 11. Add the current direction vector (scaled to speed and frame interval) to the position.
 12. Set the position of the game object to the new position.
@@ -221,7 +219,7 @@ With the code above, your game now has a player character that can move around o
 
 ## Create a rocket game object
 
-Rockets should work like this: whenever the user presses a key, a rocket should fire. It should be possible to fire any number of rockets. To solve that you cannot just add a rocket game object to "main.collection"---that would be only one single rocket object. Instead, what you need to is a *blueprint* for a rocket game object and then a *factory* that creates new game objects on the fly based on that blueprint.
+Rockets should work like this: whenever the user presses a key, a rocket should fire. It should be possible to fire any number of rockets. To solve that you cannot just add a rocket game object to "main.collection"--that would be only one single rocket object. Instead, what you need to is a *blueprint* for a rocket game object and then a *factory* that creates new game objects on the fly based on that blueprint.
 
 Start by creating the game object blueprint file:
 
@@ -251,7 +249,7 @@ Now you have a basic rocket game object blueprint, on file. The next step is to 
 
     ![input](app/doc/input_bindings_fire.jpg)
 
-5. Open "main/player.script" and add a flag to track if the player is firing to the `init()` function:
+5. Open "src/scripts/player.script.ts" and add a flag to track if the player is firing to the `init()` function:
 
     ```ts
     export function init(this: props): void {
@@ -291,13 +289,13 @@ Now you have a basic rocket game object blueprint, on file. The next step is to 
     1. If the `firing` flag is true, tell the factory component called "rocketfactory" that you just created to spawn a new game object. Note the character '#' that indicates that what follows is the id of a component.
     2. Set the firing flag to false. This flag will be set in `on_input()` each frame the player presses the fire key.
 
-7. Scroll down to the `on_input()` function. Add a fifth `elseif` for the case where the function is called with the "fire" action and only the one frame when the key is pressed down:
+7. Scroll down to the `on_input()` function. Add a fifth `else if` for the case where the function is called with the "fire" action and only the one frame when the key is pressed down:
 
     ```ts
         ...
-        if (actionId == hash("right")) {
+        if (actionId === hash("right")) {
             this.input.x = 1;
-        else if (actionId == hash("fire") && action.pressed) {
+        else if (actionId === hash("fire") && action.pressed) {
             this.firing = true;
         }
         ...
@@ -305,11 +303,13 @@ Now you have a basic rocket game object blueprint, on file. The next step is to 
 
 If you run the game now you should be able to move around and drop rockets all over the map by hammering the fire key. This is a good start.
 
+NOTE: Some [forum users](https://forum.defold.com/t/war-battles-tutorial-no-rocket-if-up-left-are-pressed/70131/7) have mentioned not being able to fire in all directions while holding multiple keys. This is a keyboard/OS issue and isn't a fault with Defold specifically. You may be able to fix it by changing the fire key.
+
 ## Set the direction of the rocket
 
 When a rocket is spawned, it is currently not oriented in the player's direction. That needs to be fixed. It should also fly straight ahead and explode after a short interval:
 
-1. Open "player.script" and scroll down to the `update()` function and update its code:
+1. Open "player.script.ts" and scroll down to the `update()` function and update its code:
 
     ```ts
     export function update(this: props, dt: number): void {
@@ -330,11 +330,11 @@ When a rocket is spawned, it is currently not oriented in the player's direction
     1. Compute the angle (in radians) of the player.
     2. Create a quaternion for that angular rotation around Z.
     3. Create a table containing property values to pass to the rocket. The player's direction is the only data the rocket needs.
-    4. Add explicit position (`nil`, the rocket will spawn at the player's position), rotation (the calculated quaternion) and spawn property values.
+    4. Add explicit position (`undefined`, the rocket will spawn at the player's position), rotation (the calculated quaternion) and spawn property values.
 
     Note that the rocket needs a movement direction in addition to the game object rotation (`rot`). It would be possible to make the rocket calculate its movement vector based on its rotation, but it is easier and more flexible to separate the two values. For instance, with a separate rotation it is possible to add rotation wobble to the rocket without it affecting the movement direction.
 
-2.  <kbd>Right click</kbd> the folder "main" in the *Assets* view and select <kbd>New ▸ Script</kbd>. Name the new script file "rocket" (full name "rocket.script"). Replace the template code in the file with the following:
+2.  Create a new TypeScript file in the "src/scripts" folder with the name "rocket.script.ts". Add the following:
 
     ```ts
     go.property("dir", vmath.vector3());                           // [1]
@@ -379,7 +379,7 @@ The rockets should explode a short while after they are fired:
 
     ![explosion animation](app/doc/explosion_animation.jpg)
 
-3. Open "rocket.script" and scroll down to the `init()` function and change it to:
+3. Open "rocket.script.ts" and scroll down to the `init()` function and change it to:
 
     ```ts
     export function init(this: props): void {
@@ -417,7 +417,7 @@ The rockets should explode a short while after they are fired:
 
     ```ts
     export function on_message(this: props, messageId: hash, message: {other_id: hash}, _sender: url): void {      // [1]
-        if (messageId == hash("animation_done") {               // [2]
+        if (messageId === hash("animation_done") {               // [2]
             go.delete();                                        // [3]
         } 
     }
@@ -486,7 +486,7 @@ The physics engine sends messages to game objects that collide. The last piece o
 
 ## Code a reaction to the collisions
 
-1. Open "rocket.script" and scroll down to the `update()` function. There are a couple of things to do here:
+1. Open "rocket.script.ts" and scroll down to the `update()` function. There are a couple of things to do here:
 
     ```ts
     function explode(this: props) {                                    // [1]
@@ -508,10 +508,10 @@ The physics engine sends messages to game objects that collide. The last piece o
     }
     
     export function on_message(this: props, messageId: hash, message: {other_id: hash}, _sender: url): void {
-        if (messageId == hash("animation_done")) {
+        if (messageId === hash("animation_done")) {
             go.delete();
         }
-        else if (messageId == hash("collision_response") {           // [3]
+        else if (messageId === hash("collision_response") {           // [3]
             explode(this: props);                                    // [4]
             go.delete(message.other_id);                             // [5]
         }
@@ -545,9 +545,9 @@ Run the game and destroy some tanks! The tanks aren't very interesting enemies, 
 
     ![ui gui](app/doc/ui.jpg)
 
-8. <kbd>Right click</kbd> the folder "main" in the *Assets* view and select <kbd>New ▸ Gui Script</kbd>. Name this new file "ui" (full name "ui.gui_script").
+8. Create a new TypeScript file in the "src/scripts" folder. Call the new file "ui.gui_script.ts".
 
-9. Go back to "ui.gui" and select the root node in the *Outline*. Set the *Script* property to the file "/main/ui.gui_script" that you just created. Now if we add this Gui as a component to a game object the Gui will be displayed and the script will run.
+9. Go back to "ui.gui" and select the root node in the *Outline*. Set the *Script* property to the file "/scripts/ui.gui_script" that you just created. Now if we add this Gui as a component to a game object the Gui will be displayed and the script will run.
 
 10. Open "main.collection".
 
@@ -561,9 +561,9 @@ Now the score counter is displayed. You only need to add functionality in the Gu
 
 ## Code the scoring update
 
-1. Open "ui.gui_script".
+1. Open "ui.gui_script.ts".
 
-2. Replace the template code with the following:
+2. Add the following code:
 
     ```ts
     export function init(this: props) {
@@ -571,7 +571,7 @@ Now the score counter is displayed. You only need to add functionality in the Gu
     }
     
     export function on_message(this: props, messageId: hash, message: {other_id: hash}, _sender: url): void {
-        if (message_id == hash("add_score") {                   // [2]
+        if (message_id === hash("add_score") {                   // [2]
             this.score = this.score + message.score;            // [3]
             const scoreNode = gui.get_node("score");            // [4]
             gui.set_text(scoreNode, "SCORE: " .. this.score);   // [5]
@@ -584,14 +584,14 @@ Now the score counter is displayed. You only need to add functionality in the Gu
     4. Get hold of the text node named "score" that you created in the Gui.
     5. Update the text of the node to the string "SCORE: " and the current score value concatenated to the end of the string.
 
-3. Open "rocket.script" and scroll down to the `on_message()` function where you need to add one new line of code:
+3. Open "rocket.script.ts" and scroll down to the `on_message()` function where you need to add one new line of code:
 
     ```ts
     export function on_message(this: props, messageId: hash, message: {other_id: hash}, _sender: url): void {
-        if (messageId == hash("animation_done")) {
+        if (messageId === hash("animation_done")) {
             go.delete();
         }
-        else if (messageId == hash("collision_response") {
+        else if (messageId === hash("collision_response") {
             explode(this);
             go.delete(message.other_id);
             msg.post("/gui#ui", "add_score", {score: 100});    // [1]
@@ -610,7 +610,7 @@ There you go! Well done!
 
 We hope you enjoyed this tutorial and that it was helpful. To get to know Defold better, we suggest that you to continue working with this little game. Here are a few suggested exercises:
 
-1. Add directional animations for the player character. Tip, add a function called `update_animation(this)` to the `update()` function and change the animation depending on the value of the `this.dir` vector. It is also worth remembering that if you send a "play_animation" message each frame to a sprite, the animation will restart from the beginning, each frame---so you should only send "play_animation" when the animation should change.
+1. Add directional animations for the player character. Tip, add a function called `update_animation(this)` to the `update()` function and change the animation depending on the value of the `this.dir` vector. It is also worth remembering that if you send a "play_animation" message each frame to a sprite, the animation will restart from the beginning, each frame--so you should only send "play_animation" when the animation should change.
 
 2. Add an "idle" state to the player character so it only plays a walking animation when moving.
 
