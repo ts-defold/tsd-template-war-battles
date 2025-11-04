@@ -60,6 +60,6 @@ export function on_input(this: props, actionId: hash, action: action): void {
 
 	if (vmath.length(this.input) > 0) {
 		this.moving = true;
-		this.dir = vmath.normalize(this.input) as vmath.vector3;
+		this.dir = vmath.normalize(this.input);
 	}
 }
